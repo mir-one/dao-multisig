@@ -1,0 +1,44 @@
+#!/usr/bin/fift -s
+"TonUtil.fif" include
+"GetOpt.fif" include
+"Stack.fif" include
+"utils.fif" include
+
+{ ."usage: " @' $0 type ." <order>" cr
+  ."Displays order loaded from <order>.boc"
+  cr 1 halt
+} : usage
+
+$# 1 <> ' usage if
+
+$1 +".boc" file>B B>boc
+load-signatures constant signatures <s
+32 u@+ swap constant wallet-id
+64 u@+ swap constant query-id
+."wallet-id = " wallet-id . cr
+."query-id = " query-id . cr
+."signed by: " signatures ' second list-map .l cr
+."Messages: " cr
+{ dup sbits } {
+  8 u@+ swap =: send-mode
+  dup ref@ <s 
+  1 i@+ swap { ."not an internal message" cr 1 halt } if
+  1 i@+ swap =: ihr-disabled
+  1 i@+ swap =: bounce
+  1 i@+ nip
+  2 u@+ swap 0 <> { ."src = none expected" cr 1 halt } if
+  addr@+ -rot 2=: dest
+  Gram@+ swap =: value
+  1 i@+ swap { ref@+ swap } { null } cond =: extra
+  Gram@+ nip Gram@+ nip
+  64 u@+ nip 32 u@+ nip
+  1 i@+ swap { ."StateInit displaying is not supported" cr 1 halt } if
+  1 i@+ swap { ref@ <s } if =: body
+
+  ."  Transferring " @' value @' extra .GR+cc ."to account "
+  @' dest 2dup @' bounce 5 + .Addr ." = " .addr cr
+  ."  ihr-disabled = " @' ihr-disabled . cr
+  ."  bounce = " @' bounce . cr
+  ."  mode = " @' send-mode x. cr
+  ."  Body of the message is " @' body csr. cr
+} while

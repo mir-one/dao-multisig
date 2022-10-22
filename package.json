@@ -1,0 +1,24 @@
+{
+  "name": "multisig",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/server/index.js",
+  "scripts": {
+    "client:generate-key": "node ./src/client/generateKeyPair.js",
+    "client:send-tx": "node ./src/client/sendTransaction.js",
+    "multisig:create": "node ./src/server/create.js",
+    "multisig:deploy": "node ./src/server/deploy.js",
+    "server:start": "node ./src/server/index.js",
+    "server:start:dev": "nodemon -x 'node --experimental-specifier-resolution=node ./src/server/index.js'"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.20",
+    "tonweb": "^0.0.55"
+  },
+  "type": "module",
+  "engines": {
+    "node": "v18.0.0"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules
+*.boc
+*.pk
+*.addr
+multisig-code.fif
+new-multisig.fif
+.env

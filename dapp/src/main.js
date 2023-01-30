@@ -30,12 +30,12 @@ const doSearch = async () => {
         window.location.href = "wallet.html?" + address
     }
     catch {
-        alert('not a multisig') 
+        alert('not a multisig')
     }
 }
 
 const goNew = () => {
-    window.location.href="new.html"
+    window.location.href = "new.html"
 }
 
 const addNew = () => {
@@ -68,7 +68,7 @@ const delOld = (e) => {
         upddelid = 'pubkey_del_' + (updid - 1)
         updlblins = 'Public key or address ' + (updid - 1)
         delfncallid = 'delOld(' + (updid - 1) + ')'
-        
+
         if (updid > delid) {
             $('.new-input')[i].setAttribute('id', updidins)
             $('.new-input')[i].setAttribute('placeholder', updlblins)
@@ -99,7 +99,7 @@ const order = async (task) => {
         $('#recipient')[0].value = ''
         $('#summ')[0].value = ''
         $('#body')[0].value = ''
-        
+
         if (reci == '') {
             alert('Address can not be empty')
         }
@@ -121,7 +121,7 @@ const order = async (task) => {
             reciv.push(reci)
             summv.push(summ)
             bodyv.push(body)
-            
+
             if (summ >= 1e9) {
                 summ = Math.floor(summ / 1e7) / 100
                 summ = summ.toString() + 'B'
@@ -130,9 +130,9 @@ const order = async (task) => {
                 summ = Math.floor(summ / 1e4) / 100
                 summ = summ.toString() + 'M'
             }
-            
-            let divins = '<div onclick="orderInsert(' + orders + ')"><span class="wallet-create-show-spadd">' + reci.slice(0,3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
-            
+
+            let divins = '<div onclick="orderInsert(' + orders + ')"><span class="wallet-create-show-spadd">' + reci.slice(0, 3) + '..' + reci.slice(-3) + '</span><span class="wallet-create-show-spamm">' + summ + '</span><i class="fa-solid fa-xmark" onclick="orderDelete(' + orders + ')"></i></div>'
+
             $('.wallet-create-show')[0].insertAdjacentHTML('beforeend', divins)
         }
     }
@@ -147,7 +147,7 @@ const orderDelete = (id) => {
     bodyv.splice(id - 1, 1)
     $('.wallet-create-show > div')[id - 1].remove()
     orders -= 1
-    for (let i = id-1 ; i < orders; i++) {
+    for (let i = id - 1; i < orders; i++) {
         idred = 'orderDelete(' + (i + 1) + ')'
         $('.wallet-create-show > div > i')[i].setAttribute('onclick', idred)
         idred = 'orderInsert(' + (i + 1) + ')'
@@ -155,7 +155,7 @@ const orderDelete = (id) => {
     }
 }
 
-const orderSaveToFile = async () =>  {
+const orderSaveToFile = async () => {
     let reci = $('#recipient')[0].value
     let summ = $('#summ')[0].value
     let body = $('#body')[0].value
@@ -174,7 +174,7 @@ const orderSaveToFile = async () =>  {
 
     const boc = await order.toBoc(false)
     const blob = new Blob([boc])
-    
+
     saveAs(blob, 'order.boc')
 }
 
@@ -212,7 +212,7 @@ const showInfo = (File) => {
             let mode = boc.bits.readUint(8).toNumber()
             let msg = boc.refs[i]
             msg.bits.readBits(6 + 3)
-            
+
             const destAddressRaw = msg.bits.readInt(8) + ':' + msg.bits.readBits(256)
             const destAddress = new tonweb.utils.Address(destAddressRaw).toString(true, true, true, false)
 
@@ -232,7 +232,7 @@ const showInfo = (File) => {
 
             const commentBytes = body.bits.readBits(body.bits.length - body.bits.readCursor)
             const comment = new TextDecoder().decode(commentBytes.array)
-            
+
             console.log(mode, destAddress, value, comment)
             rec.push(destAddress)
             amo.push(tonweb.utils.fromNano(value.toString()))
@@ -247,11 +247,11 @@ const showInfo = (File) => {
         while (unt != 0) {
             unt -= 1
             ins = '<div class="wallet-ordinfo-ord🤠"><span class="wallet-ordinf-ord-posname">Recipient:</span><span class="poscontent-block wallet-ordinf-ord-poscontent">' + rec[unt] + '</span><span class="wallet-ordinf-ord-posname">Amount:</span><span class="wallet-ordinf-ord-poscontent">' + amo[unt] + '</span><span class="wallet-ordinf-ord-posname">Body:</span><span class="poscontent-block wallet-ordinf-ord-poscontent">' + bod[unt] + '</span><span class="wallet-ordinf-ord-posname">Send mode:</span>'
-            if(sem[unt] == "1337"){
+            if (sem[unt] == "1337") {
                 ins += '<span class="wallet-ordinf-ord-poscontent" style="color:red;">' + sem[unt] + '</span><span class="wallet-ordinf-ord-posname">Extra currencies:</span>'
             }
             else ins += '<span class="wallet-ordinf-ord-poscontent">' + sem[unt] + '</span><span class="wallet-ordinf-ord-posname">Extra currencies:</span>'
-            if(exc[unt] != "empty"){
+            if (exc[unt] != "empty") {
                 ins += '<span class="wallet-ordinf-ord-poscontent" style="color:red;">' + exc[unt] + '</span></div>'
             }
             else ins += '<span class="wallet-ordinf-ord-poscontent">' + exc[unt] + '</span></div>'
@@ -267,7 +267,7 @@ const styleClear = () => {
     }
 }
 
-const createWallet = async  () => {
+const createWallet = async () => {
     let pubkeys = []
     for (const inp of $('.new-input')) {
         try {
@@ -311,8 +311,8 @@ const createWallet = async  () => {
     }
 
     const wc = $('#workchain_id')[0].value,
-          wallet_id = $('#wallet_id')[0].value,
-          k = $('#k_value')[0].value
+        wallet_id = $('#wallet_id')[0].value,
+        k = $('#k_value')[0].value
 
     console.log(wc, wallet_id, k)
 
@@ -340,9 +340,9 @@ const createWallet = async  () => {
     startLoading()
 
     await ton.send('ton_sendTransaction', [{
-            to: contract.address.toString(true, true, false),
-            value: '50000000'
-        }]
+        to: contract.address.toString(true, true, false),
+        value: '50000000'
+    }]
     )
 
     let txHash = (await tonweb.getTransactions(address, 1))[0].transaction_id.hash
@@ -356,7 +356,7 @@ const createWallet = async  () => {
     console.log(await deployTx.send())
 
     const multisigAddress = contract.address.toString(true, true, true)
-    
+
     endLoading();
 
     window.location.href = "wallet.html?" + multisigAddress
@@ -390,7 +390,7 @@ const endLoading = () => {
 }
 
 const loadIndex = async () => {
-    if(localStorage.getItem('network') == 'test'){
+    if (localStorage.getItem('network') == 'test') {
         $('#1337')[0].setAttribute('checked', 'true')
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
     }
@@ -410,14 +410,14 @@ const loadNew = async () => {
     $('.new-add-button').click(addNew)
     addNew()
     addNew()
-    if(localStorage.getItem('network') == 'test'){
+    if (localStorage.getItem('network') == 'test') {
         $('#1337')[0].setAttribute('checked', 'true')
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
     }
 }
 
 const loadWallet = async () => {
-    if(localStorage.getItem('network') == 'test'){
+    if (localStorage.getItem('network') == 'test') {
         $('#1337')[0].setAttribute('checked', 'true')
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
     }
@@ -466,7 +466,7 @@ const loadWallet = async () => {
     dataBoc = tonweb.boc.Cell.oneFromBoc(tonweb.utils.base64ToBytes(data))
     dataBoc.bits.readBits(64)
     const pubkey = dataBoc.bits.readUint(256).words
-    
+
     for (const o_i in owners) {
         if (JSON.stringify(owners[o_i]) == JSON.stringify(pubkey)) {
             window.multisig_owner_id = o_i
@@ -500,7 +500,7 @@ const changeNetwork = (old) => {
         $('#1337')[0].setAttribute('onclick', 'changeNetwork(true)')
         //Ну тут соответственно на тестнет 
 
-        
+
         console.log('network: ' + localStorage.getItem('network'))
     }
 }

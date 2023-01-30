@@ -1,4 +1,4 @@
-const tonwebMainnet = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {apiKey: '1b312c91c3b691255130350a49ac5a0742454725f910756aff94dfe44858388e'}))
+const tonwebMainnet = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {apiKey: 'f65f0931e95fc61351bf4a2db8442ccb30ce0b5328f6e65617fd755698a825ae'}))
 const tonwebTestnet = new TonWeb(new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC', {apiKey: '41ac6f57294e0805f1836ac7feb2befd8cbad2d85c87093faf04e4d108499cf8'}))
 window.tonweb = tonwebMainnet
 
